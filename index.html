@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My NCC Photo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { background-color: #000; color: #fff; text-align: center; font-family: sans-serif; padding-top: 50px; }
+    </style>
+    <script>
+        window.onload = function() {
+            // लिंक से डेटा निकालो
+            const urlParams = new URLSearchParams(window.location.search);
+            const photoUrl = urlParams.get('url');
+            const title = urlParams.get('title');
+            const isPublic = urlParams.get('isPublic');
+            const category = urlParams.get('category');
+
+            if(photoUrl) {
+                // तुम्हारी ऐप का कस्टम लिंक बनाओ
+                const appLink = `myncc://board/photo?url=${encodeURIComponent(photoUrl)}&title=${encodeURIComponent(title)}&isPublic=${isPublic}&category=${encodeURIComponent(category)}`;
+                
+                // तुरंत ऐप को ओपन करो
+                window.location.href = appLink;
+
+                // अगर ऐप इंस्टॉल नहीं है, तो 2 सेकंड बाद यह मैसेज दिखेगा
+                setTimeout(function() {
+                    document.getElementById("message").innerHTML = "App not found. Please install My NCC App to view this photo.";
+                }, 2000);
+            } else {
+                document.getElementById("message").innerHTML = "Invalid Photo Link.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h3 id="message">Opening in My NCC App...</h3>
+</body>
+</html>
